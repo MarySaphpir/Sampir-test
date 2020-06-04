@@ -1,16 +1,14 @@
 <div class="search">
   <div class="search__container">
-    <input id="search-input"
-           [formControl]="searchField"
+    <input  [formControl]="searchField"
            class="search__input"
            placeholder="Start your search"/>
     <button class="search__button"
-            id="search-button"
-            (click)="search"
+            (click)="search()"
             >Search</button>
   </div>
 
   <div class="search__results">
-<!--    {{ results }}-->
+    {{ results }}
   </div>
 </div>

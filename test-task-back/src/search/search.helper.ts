@@ -1,16 +1,16 @@
-import { MOCK_DATA } from '../mock/mock-data';
+export function findKeyValue(object, requestedKey): string | {[key: string]: string} {
+  let value: string | {[key: string]: string};
 
-export function findKeyValue(object, requestedKey): string {
-  let value;
-  Object.keys(object).some(function(k) {
+  Object.keys(object).find(function(k) {
     if (k === requestedKey) {
       value = object[k];
       return true;
     }
-    if (object[k] && typeof object[k] === 'object') {
+    if (object[k] && (object[k] instanceof Object || object[k] instanceof Array)) {
       value = findKeyValue(object[k], requestedKey);
       return value !== undefined;
     }
   });
-  return value;
+
+  return value || `key isn't available`;
 }

@@ -14,4 +14,10 @@ export class SearchService {
         params
       });
   }
+  getUsers(): Observable<string> {
+    return this.httpClient.get('/api/items',
+      {
+        responseType: 'text',
+      });
+  }
 }

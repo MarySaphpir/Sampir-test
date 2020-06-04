@@ -1,49 +1,45 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import {SearchComponent} from './search.component';
 import {SearchService} from './service/search.service';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 import {of} from 'rxjs';
 
+const getItems = (query) => of('result');
 
 describe('Component: Search', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   let searchService: SearchService;
-  let submitButton: DebugElement;
-  let inputElement: DebugElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SearchComponent],
       providers: [
         {provide: SearchService, useValue: {
-            getItems: (query) => of('result')
+            getItems
           }}
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
-    searchService = TestBed.get(SearchService);
+    searchService = TestBed.inject(SearchService);
 
     fixture.detectChanges();
-    submitButton = fixture.debugElement.query(By.css('#search-button'));
-    inputElement = fixture.debugElement.query(By.css('#search-input'));
   });
 
-  it('From the beginning input field and button should be available', () => {
-    fixture.detectChanges();
-    expect(submitButton.nativeElement).toBeTruthy();
-    expect(inputElement.nativeElement).toBeTruthy();
+  it('should create the component', () => {
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
   });
   it('should load search result', () => {
     spyOn(searchService, 'getItems')
       .and
       .callThrough();
     fixture.detectChanges();
-    component.searchField.setValue('123');
+    component.searchField.setValue('taglib-uri');
     component.search();
-    expect(searchService.getItems).toHaveBeenCalledWith({query: '123'});
+    expect(searchService.getItems).toHaveBeenCalledWith({query: 'taglib-uri'});
     expect(component.results).toEqual('result');
   });
   it('should not load search result', () => {
@@ -53,7 +49,7 @@ describe('Component: Search', () => {
     fixture.detectChanges();
     component.searchField.setValue('');
     component.search();
-    expect(searchService.getItems).not.toHaveBeenCalledWith({query: '123'});
+    expect(searchService.getItems).not.toHaveBeenCalled();
     expect(component.results).not.toEqual('result');
   });
 });

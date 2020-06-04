@@ -36,7 +36,6 @@ describe('Component: Search', () => {
     spyOn(searchService, 'getItems')
       .and
       .callThrough();
-    fixture.detectChanges();
     component.searchField.setValue('taglib-uri');
     component.search();
     expect(searchService.getItems).toHaveBeenCalledWith({query: 'taglib-uri'});

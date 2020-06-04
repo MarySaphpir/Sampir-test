@@ -14,8 +14,8 @@ describe('SearchService', () => {
       providers: [SearchService]
     });
     injector = getTestBed();
-    service = injector.get(SearchService);
-    httpMock = injector.get(HttpTestingController);
+    service = injector.inject(SearchService);
+    httpMock = injector.inject(HttpTestingController);
   });
 
   afterEach(() => {

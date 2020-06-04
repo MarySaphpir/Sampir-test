@@ -5,11 +5,14 @@ describe('SearchController', () => {
   const searchHelper = findKeyValue;
 
   describe('Check search function', () => {
-    it('should return empty array', async() => {
-      expect(searchHelper(MOCK_DATA, 'cofaxCDSS')).toBe(`key isn't available`);
+    it('should return text undefined', async() => {
+      expect(searchHelper(MOCK_DATA, 'cofaxCDSS')).toBe(undefined);
     });
-    it("should return a slash", async () => {
-      expect(searchHelper(MOCK_DATA, 'c')).toBe(`key isn't available`);
+    it('should return slash', async() => {
+      expect(searchHelper(MOCK_DATA, 'cofaxCDS')).toBe('/');
+    });
+    it('should return object', async () => {
+      expect(searchHelper(MOCK_DATA, 'taglib').toString()).toBe({"taglib-uri":"cofax.tld","taglib-location":"/WEB-INF/tlds/cofax.tld"}.toString());
     });
   });
 });
